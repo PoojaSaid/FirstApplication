@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="25dp"
+    android:background="@drawable/background"
+    tools:context=".ui.RegisterFragment">
+
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="15dp"
+        android:textSize="35dp"
+        android:textColor="@color/colorWhite"
+        android:textStyle="bold"
+        android:text="Register" />
+
+    <EditText
+        android:id="@+id/inputUserNameEd"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/textView"
+        android:layout_centerHorizontal="true"
+        android:drawableStart="@drawable/ic_person"
+        android:background="@drawable/rectangel"
+        android:padding="10dp"
+        android:layout_marginTop="35dp"
+        android:textColorHint="@color/colorWhite"
+        android:textColor="@color/colorWhite"
+        android:drawablePadding="6dp"
+        android:inputType="textPersonName"
+        android:hint="UserName"
+        android:drawableLeft="@drawable/ic_person" />
+
+    <EditText
+        android:id="@+id/inputEmailEd"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/inputUserNameEd"
+        android:layout_centerHorizontal="true"
+        android:background="@drawable/rectangel"
+        android:padding="10dp"
+        android:layout_marginTop="35dp"
+        android:drawableStart="@drawable/ic_email"
+        android:drawablePadding="6dp"
+        android:textColor="@color/colorWhite"
+        android:inputType="textEmailAddress"
+        android:textColorHint="@color/colorWhite"
+        android:hint="Email"
+        android:drawableLeft="@drawable/ic_email" />
+
+    <EditText
+        android:id="@+id/inputPasswordEd"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/inputEmailEd"
+        android:background="@drawable/rectangel"
+        android:padding="10dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="35dp"
+        android:textColor="@color/colorWhite"
+        android:inputType="textPassword"
+        android:drawableStart="@drawable/ic_security"
+        android:drawablePadding="6dp"
+        android:textColorHint="@color/colorWhite"
+        android:hint="********"
+        android:drawableLeft="@drawable/ic_security" />
+
+    <EditText
+        android:id="@+id/inputConfirmPasswordEd"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/inputPasswordEd"
+        android:background="@drawable/rectangel"
+        android:padding="10dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="35dp"
+        android:layout_marginBottom="10dp"
+        android:drawableStart="@drawable/ic_security"
+        android:textColor="@color/colorWhite"
+        android:drawablePadding="6dp"
+        android:textColorHint="@color/colorWhite"
+        android:inputType="textPassword"
+        android:hint="********"
+        android:drawableLeft="@drawable/ic_security" />
+
+    <Button
+        android:id="@+id/registerUserBtn"
+        android:layout_below="@id/inputConfirmPasswordEd"
+        android:layout_width="match_parent"
+        android:layout_marginTop="10dp"
+        android:layout_height="wrap_content"
+        android:background="@drawable/btn_bg"
+        android:text="Register"/>
+
+    <TextView
+        android:id="@+id/alreadyHavAccountBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="15dp"
+        android:textSize="15dp"
+        android:layout_below="@id/registerUserBtn"
+        android:textColor="@color/colorWhite"
+        android:textStyle="bold"
+        android:text="Already Have an account ? " />
+
+</RelativeLayout>
