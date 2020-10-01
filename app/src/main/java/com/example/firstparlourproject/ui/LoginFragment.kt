@@ -12,8 +12,11 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
 import android.widget.Toast
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.example.firstparlourproject.R
+import com.example.firstparlourproject.model.user
+import com.example.firstparlourproject.viewModel.UserViewModel
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.auth.AuthResult
 import com.google.firebase.auth.FirebaseAuth
@@ -23,8 +26,9 @@ import kotlinx.android.synthetic.main.fragment_login.view.*
 
 class LoginFragment : Fragment() {
 
-    private lateinit var auth: FirebaseAuth
+    private lateinit var  mUserViewModel: UserViewModel
 
+    private lateinit var auth: FirebaseAuth
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -34,12 +38,13 @@ class LoginFragment : Fragment() {
         val view = inflater.inflate(R.layout.fragment_login, container, false)
 //        auth = Firebase.auth
          auth = FirebaseAuth.getInstance()
+        mUserViewModel = ViewModelProvider(this).get(UserViewModel::class.java)
         var lodingBar = ProgressDialog(requireContext())
         view.loginUserBtn.setOnClickListener {
 
 //            login(view)
             doLogin()
-            findNavController().navigate(R.id.action_loginFragment_to_homeFragment)
+
         }
 
         view.signupTv.setOnClickListener {
@@ -51,17 +56,27 @@ class LoginFragment : Fragment() {
     }
 
     private fun doLogin() {
-        if (loginPasswordEd.text.toString().isEmpty()) {
-            loginPasswordEd.error = "Please enter email"
-            loginPasswordEd.requestFocus()
-        }
 
-        if (!Patterns.EMAIL_ADDRESS.matcher(loginEmailEd.text.toString()).matches()) {
+        var userEmail = loginEmailEd.text.toString()
+        val userPassword = loginPasswordEd.text.toString()
+
+        if (!Patterns.EMAIL_ADDRESS.matcher(userEmail).matches()) {
             loginEmailEd.error = "Please enter valid email"
             loginEmailEd.requestFocus()
         }
 
-        auth.signInWithEmailAndPassword(
+        if (userPassword.isEmpty()) {
+            loginPasswordEd.error = "Please enter email"
+            loginPasswordEd.requestFocus()
+        }
+
+
+//        val userObj: user = user(,userEmail,userPassword)
+        //Get data from database, if customer exist
+        val userExist = mUserViewModel.getCustomerDetails(userEmail, userPassword)
+        Log.d("CustomerObject",userExist.toString())
+
+        /*auth.signInWithEmailAndPassword(
             loginEmailEd.text.toString(),
             loginPasswordEd.text.toString()
         )
@@ -79,8 +94,11 @@ class LoginFragment : Fragment() {
                 }
 
                 // ...
-            }
+           }*/
 
+
+//        navigate after successful login
+        findNavController().navigate(R.id.action_loginFragment_to_homeFragment)
 
     }
 
@@ -90,53 +108,20 @@ class LoginFragment : Fragment() {
         updateUI(currentUser)*/
     }
 
-    fun updateUI(currentUser: FirebaseUser?) {
+/*    fun updateUI(currentUser: FirebaseUser?) {
         if (currentUser != null) {
 //            if(currentUser.isEmailVerified) {
                 findNavController().navigate(R.id.action_loginFragment_to_homeFragment)
-            /*}else{
+            *//*}else{
                 Toast.makeText(requireContext(), "EMail is not verified", Toast.LENGTH_SHORT).show()
 
-            }*/
+            }*//*
         } else {
             Toast.makeText(requireContext(), "Login failed.", Toast.LENGTH_SHORT).show()
         }
 
-    }
+    }*/
 
-
-
-
-    /* private fun login(view: View) {
-         val emailTxt = view.findViewById<View>(R.id.loginEmailEd) as EditText
-         val email = emailTxt.text.toString()
-         val passwordTxt = view.findViewById<View>(R.id.loginPasswordEd) as EditText
-         val password = passwordTxt.text.toString()
-
-         if(){
-
-         }
-
-         if (!email.isEmpty() && !password.isEmpty()) {
-             this.mAuth.signInWithEmailAndPassword(email, password)
-                 .addOnCompleteListener(this, OnCompleteListener<AuthResult> { task ->
-                     if (task.isSuccessful) {
-                         startActivity(Intent(this, Timeline::class.java))
-                         Toast.makeText(
-                             requireContext(),
-                             "Successfully Logged in :)",
-                             Toast.LENGTH_LONG
-                         ).show()
-                     } else {
-                         Toast.makeText(requireContext(), "Error Logging in :(", Toast.LENGTH_SHORT)
-                             .show()
-                     }
-                 })
-
-         } else {
-             Toast.makeText(requireContext(), "Please fill up the Credentials :|", Toast.LENGTH_SHORT).show()
-         }
-     }*/
 
 
 }

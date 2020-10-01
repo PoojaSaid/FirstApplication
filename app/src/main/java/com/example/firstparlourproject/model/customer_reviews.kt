@@ -7,6 +7,7 @@ import androidx.room.PrimaryKey
 data class customer_reviews (
 
     val cr_u_id:String,
+    @PrimaryKey
     val cr_id:String,
     val cr_review:String
 
