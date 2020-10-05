@@ -71,7 +71,7 @@
         android:drawableLeft="@drawable/ic_security" />
 
     <EditText
-        android:id="@+id/inputConfirmPasswordEd"
+        android:id="@+id/inputPhoneNumberEd"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/inputPasswordEd"
@@ -80,17 +80,17 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="35dp"
         android:layout_marginBottom="10dp"
-        android:drawableStart="@drawable/ic_security"
+        android:drawableStart="@drawable/ic_phone"
         android:textColor="@color/colorWhite"
         android:drawablePadding="6dp"
         android:textColorHint="@color/colorWhite"
-        android:inputType="textPassword"
-        android:hint="********"
+        android:inputType="phone"
+        android:hint="9869545844"
         android:drawableLeft="@drawable/ic_security" />
 
     <Button
         android:id="@+id/registerUserBtn"
-        android:layout_below="@id/inputConfirmPasswordEd"
+        android:layout_below="@id/inputPhoneNumberEd"
         android:layout_width="match_parent"
         android:layout_marginTop="10dp"
         android:layout_height="wrap_content"

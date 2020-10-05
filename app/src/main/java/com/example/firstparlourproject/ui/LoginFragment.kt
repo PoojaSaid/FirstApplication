@@ -12,6 +12,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
 import android.widget.Toast
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.example.firstparlourproject.R
@@ -26,9 +28,9 @@ import kotlinx.android.synthetic.main.fragment_login.view.*
 
 class LoginFragment : Fragment() {
 
-    private lateinit var  mUserViewModel: UserViewModel
+    private lateinit var mUserViewModel: UserViewModel
 
-    private lateinit var auth: FirebaseAuth
+//    private lateinit var auth: FirebaseAuth
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -36,13 +38,12 @@ class LoginFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_login, container, false)
-//        auth = Firebase.auth
-         auth = FirebaseAuth.getInstance()
+
         mUserViewModel = ViewModelProvider(this).get(UserViewModel::class.java)
+
+
         var lodingBar = ProgressDialog(requireContext())
         view.loginUserBtn.setOnClickListener {
-
-//            login(view)
             doLogin()
 
         }
@@ -57,7 +58,7 @@ class LoginFragment : Fragment() {
 
     private fun doLogin() {
 
-        var userEmail = loginEmailEd.text.toString()
+        val userEmail = loginEmailEd.text.toString()
         val userPassword = loginPasswordEd.text.toString()
 
         if (!Patterns.EMAIL_ADDRESS.matcher(userEmail).matches()) {
@@ -70,11 +71,40 @@ class LoginFragment : Fragment() {
             loginPasswordEd.requestFocus()
         }
 
-
-//        val userObj: user = user(,userEmail,userPassword)
         //Get data from database, if customer exist
-        val userExist = mUserViewModel.getCustomerDetails(userEmail, userPassword)
+
+       val userExist =  mUserViewModel.getCustomerDetails(userEmail, userPassword)?.observe(
+            viewLifecycleOwner, Observer {
+                for(i in 0 until it.size) {
+
+                    val custObj = it.get(i)
+                    Log.d("CustomerObject",custObj.toString())
+                }
+            }
+        )
+
         Log.d("CustomerObject",userExist.toString())
+       /* if(userExist.toString().isEmpty().not()) {
+//            for(i in userExist!!.value.toString().indices) {
+//                if (userExist.value!!.get(i).u_email == userEmail && userExist.get(i).u_password == userPassword) {
+                    Toast.makeText(requireContext(), "Login Successfully", Toast.LENGTH_SHORT)
+                        .show()
+                    //        navigate after successful login
+                    findNavController().navigate(R.id.action_loginFragment_to_homeFragment)
+
+//                } else {
+//                    Toast.makeText(
+//                        requireContext(),
+//                        "Please enter the write credentials",
+//                        Toast.LENGTH_SHORT
+//                    ).show()
+//
+//                }
+//            }
+        }else{
+            Toast.makeText(requireContext(), "Please first sign up and then login", Toast.LENGTH_SHORT).show()
+
+        }*/
 
         /*auth.signInWithEmailAndPassword(
             loginEmailEd.text.toString(),
@@ -97,30 +127,9 @@ class LoginFragment : Fragment() {
            }*/
 
 
-//        navigate after successful login
-        findNavController().navigate(R.id.action_loginFragment_to_homeFragment)
-
     }
 
-    override fun onStart() {
-        super.onStart()
-       /* var currentUser = auth.currentUser
-        updateUI(currentUser)*/
-    }
 
-/*    fun updateUI(currentUser: FirebaseUser?) {
-        if (currentUser != null) {
-//            if(currentUser.isEmailVerified) {
-                findNavController().navigate(R.id.action_loginFragment_to_homeFragment)
-            *//*}else{
-                Toast.makeText(requireContext(), "EMail is not verified", Toast.LENGTH_SHORT).show()
-
-            }*//*
-        } else {
-            Toast.makeText(requireContext(), "Login failed.", Toast.LENGTH_SHORT).show()
-        }
-
-    }*/
 
 
 
