@@ -15,8 +15,10 @@ import kotlinx.coroutines.launch
  class UserViewModel(application: Application) : AndroidViewModel(application) {
     private val repository: UserRepo
     val readAllData: LiveData<List<user>>
+    private lateinit var readAll: LiveData<List<user>>
 //    private val readCust: LiveData<List<user>>?
 //    val userObj: LiveData<user> = null
+
 
     init {
         val userDao = parlourDatabse.getDatabase(application).userDao()
@@ -24,6 +26,13 @@ import kotlinx.coroutines.launch
         readAllData = repository.readAllData
 
     }
+
+fun newTrend():LiveData<List<user>>{
+
+    readAll = repository.readAllData
+
+    return readAll
+}
 
 
     fun addUser(User: user) {
@@ -37,7 +46,7 @@ import kotlinx.coroutines.launch
 
      var demo : LiveData<List<user>>? = null
         viewModelScope.launch(Dispatchers.IO) {
-             demo= repository.readCustObj(userEmail, userPassword)
+              demo = repository.readCustObj(userEmail, userPassword)
 //            demo.value
             Log.d("checking",demo?.value.toString())
 

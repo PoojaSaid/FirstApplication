@@ -67,23 +67,47 @@ class LoginFragment : Fragment() {
         }
 
         if (userPassword.isEmpty()) {
-            loginPasswordEd.error = "Please enter email"
+            loginPasswordEd.error = "Please enter password"
             loginPasswordEd.requestFocus()
         }
 
         //Get data from database, if customer exist
 
-       val userExist =  mUserViewModel.getCustomerDetails(userEmail, userPassword)?.observe(
-            viewLifecycleOwner, Observer {
-                for(i in 0 until it.size) {
+       /*val userExist =  mUserViewModel.getCustomerDetails(userEmail, userPassword)?.observe(
+            viewLifecycleOwner, Observer {userObj ->
+                for(i in 0 until userObj.size) {
 
-                    val custObj = it.get(i)
+                    val custObj = userObj.get(i)
                     Log.d("CustomerObject",custObj.toString())
+
                 }
             }
-        )
+        )*/
 
-        Log.d("CustomerObject",userExist.toString())
+        mUserViewModel.readAllData.observe(viewLifecycleOwner, Observer {userList ->
+
+            if(userList.isEmpty()){
+                Toast.makeText(requireContext(),"Need to signUp First", Toast.LENGTH_SHORT).show()
+            }else{
+                for(i in 0 until userList.size) {
+                    var userObj = userList.get(i)
+
+                    if(userObj.u_email.equals(userEmail) && userObj.u_password.equals(userPassword)){
+                        Toast.makeText(requireContext(),"Login successful", Toast.LENGTH_SHORT).show()
+                        //        navigate after successful login
+                        findNavController().navigate(R.id.action_loginFragment_to_homeFragment)
+                    }else{
+                        Toast.makeText(requireContext(),"You entered incorrect credentials", Toast.LENGTH_SHORT).show()
+
+                    }
+                }
+
+
+            }
+
+        })
+
+//        Log.d("CustomerObject",userExist.toString())
        /* if(userExist.toString().isEmpty().not()) {
 //            for(i in userExist!!.value.toString().indices) {
 //                if (userExist.value!!.get(i).u_email == userEmail && userExist.get(i).u_password == userPassword) {

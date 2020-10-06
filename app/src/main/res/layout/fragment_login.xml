@@ -43,7 +43,7 @@
         android:layout_below="@id/loginEmailEd"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="35dp"
-        android:background="@drawable/rectangel"   
+        android:background="@drawable/rectangel"
         android:drawableStart="@drawable/ic_security"
         android:drawableLeft="@drawable/ic_security"
         android:drawablePadding="6dp"
